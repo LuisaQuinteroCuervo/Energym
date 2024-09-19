@@ -1,0 +1,95 @@
+CREATE DATABASE EnergymDB;
+
+USE EnergymDB;
+
+-- tabla para los planes de pago
+CREATE TABLE PlanesPago (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_plan VARCHAR(20) NOT NULL
+);
+
+-- tipos de planes
+INSERT INTO PlanesPago (nombre_plan) 
+VALUES ('Mensual'), ('Semestral'), ('Anual');
+
+-- tabla para los clientes
+CREATE TABLE Clientes (
+    cedula INT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    correo_electronico VARCHAR(100) NOT NULL,
+    numero_telefono VARCHAR(15) NOT NULL,
+    edad INT NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    foto VARCHAR(255),
+    fecha_registro DATE NOT NULL,
+    id_plan_pago INT,
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Inactivo',
+    FOREIGN KEY (id_plan_pago) REFERENCES PlanesPago(id)
+);
+
+-- tabla para el historial de pagos
+CREATE TABLE HistorialPagos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cedula_cliente INT,
+    valor DECIMAL(10, 2) NOT NULL,
+    fecha_pago DATE NOT NULL,
+    id_plan_pago INT,
+    dias_restantes INT NOT NULL,
+    FOREIGN KEY (cedula_cliente) REFERENCES Clientes(cedula),
+    FOREIGN KEY (id_plan_pago) REFERENCES PlanesPago(id)
+);
+
+/* se puden agregar a futuro 
+-- Crear una vista para ListaClientes
+CREATE VIEW ListaClientes AS
+SELECT foto, nombre, apellido, correo_electronico, estado
+FROM Clientes;
+
+DELIMITER $$
+
+-- Crear el procedimiento almacenado
+CREATE PROCEDURE ReporteMensualClientes(IN mes INT)
+BEGIN
+    -- Clientes registrados en el mes
+    SELECT COUNT(*) AS clientes_registrados
+    FROM Clientes
+    WHERE MONTH(fecha_registro) = mes;
+
+    -- Clientes con membresía activa
+    SELECT COUNT(*) AS clientes_activos
+    FROM Clientes
+    WHERE estado = 'Activo' AND MONTH(fecha_registro) = mes;
+
+    -- Clientes con membresía inactiva
+    SELECT COUNT(*) AS clientes_inactivos
+    FROM Clientes
+    WHERE estado = 'Inactivo' AND MONTH(fecha_registro) = mes;
+
+    -- Clientes con pago mensual activo
+    SELECT COUNT(*) AS clientes_pago_mensual_activo
+    FROM Clientes
+    WHERE id_plan_pago = (SELECT id FROM PlanesPago WHERE nombre_plan = 'Mensual')
+      AND estado = 'Activo' AND MONTH(fecha_registro) = mes;
+
+    -- Clientes con pago semestral activo
+    SELECT COUNT(*) AS clientes_pago_semestral_activo
+    FROM Clientes
+    WHERE id_plan_pago = (SELECT id FROM PlanesPago WHERE nombre_plan = 'Semestral')
+      AND estado = 'Activo' AND MONTH(fecha_registro) = mes;
+
+    -- Clientes con pago anual activo
+    SELECT COUNT(*) AS clientes_pago_anual_activo
+    FROM Clientes
+    WHERE id_plan_pago = (SELECT id FROM PlanesPago WHERE nombre_plan = 'Anual')
+      AND estado = 'Activo' AND MONTH(fecha_registro) = mes;
+
+    -- Total de ingresos del mes
+    SELECT SUM(valor) AS total_ingresos_mes
+    FROM HistorialPagos
+    WHERE MONTH(fecha_pago) = mes;
+END$$
+
+DELIMITER ; -- para usar "CALL ReporteMensualClientes(numero mes);" 
+*/
+
