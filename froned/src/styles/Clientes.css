@@ -1,0 +1,39 @@
+.containerCli{
+
+    margin-left: 300px;
+}
+
+.volver{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2%;
+}
+
+.btnV{
+    background-image: url("../assets/img/vuelta.png");
+    padding: 1px;
+    margin: 20px;
+    height: 5vh;
+    width: 50px;
+    border: none;
+}
+.titC{
+    background-color: #C9E5B3; 
+    width: 300px;
+
+}
+
+.btnA{
+    background-color: #72D40F;
+    border-radius: 10px;
+    border: none;
+    font-size: 27px;
+    color: #000000;
+}
+
+.custom-border{
+    border-color: #ff6347; 
+    opacity: 5px;
+}
