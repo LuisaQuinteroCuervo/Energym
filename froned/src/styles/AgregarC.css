@@ -1,0 +1,62 @@
+.containerAdd{
+    padding: 13px;
+    margin: 15px;
+}
+
+.container2{
+    padding: 35px;
+    margin: 15px;
+    display: flex;
+    flex-wrap: wrap; 
+    background-color: #C9E5B3;
+
+}
+
+.row{
+    flex: 1 0 22%; 
+    padding: 20px;
+    text-align: center;
+}
+
+.subirF{
+
+    text-align: center;
+
+}
+.fotoS{
+    height: 10vh;
+    width: 30vh;
+    margin: 10px;
+}
+
+.datos2{
+    margin-bottom: 30px;
+    row-gap: 20px;
+    border:none;
+    background-color: #72D40F;
+    border-radius: 5px;
+    height: 40px;
+    font-size: 20px;
+    outline: none;
+    width: 20vh;
+    
+}
+.datos2::placeholder{
+    color:#000000;
+    opacity: 10px;
+}
+
+
+
+.btnNuevoc{
+    margin-left: 1000px;
+    border-radius: 5px;
+    height: 50px;
+    font-size: 30px;
+    outline: none;
+    border:none;
+    background-color: #72D40F;
+    color: #000000;
+    opacity: 100px;
+}
+
