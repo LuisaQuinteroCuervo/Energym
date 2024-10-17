@@ -14,7 +14,7 @@ class Clientes(models.Model):
         ('Inactivo', 'Inactivo'),
     ]
     
-    cedula = models.IntegerField(primary_key=True)
+    cedula = models.BigIntegerField(primary_key=True)
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     correo_electronico = models.EmailField(max_length=100)
