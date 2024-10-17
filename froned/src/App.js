@@ -7,6 +7,9 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import Clientes from './components/Clientes';
 import AgregarC from './components/AgregarC';
+import Perfil from './components/Perfil';
+import EditarC from './components/EditarC';
+import HistorialP from './components/HistorialP';
 import Resumen from "./components/Resumen";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,6 +26,9 @@ function App() {
           <Route path="/Clientes" element={<Clientes/>} />
           <Route path="/Resumen" element={<Resumen/>} />
           <Route path="/AgregarC" element={<AgregarC/>} />
+          <Route path="/Perfil" element={<Perfil/>}/>
+          <Route path="/EditarC" element={<EditarC/>}/>
+          <Route path="/HistorialP" element={<HistorialP/>}/>
 
         </Routes>
       </BrowserRouter>

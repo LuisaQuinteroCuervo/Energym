@@ -1,38 +1,22 @@
-import "../styles/AgregarC.css";
-import "../styles/Perfil.css";
 import { useNavigate } from "react-router-dom";
+import "../styles/AgregarC.css";
 
-const Perfil = () => {
+
+const EditarC = () => {
     const navigate = useNavigate();
 
-    const handleDevolver = () => {
-        navigate("/clientes");
-    }
-
-    const handleEditar = () => {
-        navigate("/EditarC");
-    }
-
-    const handleHistorial = () => {
-        navigate("/HistorialP")
-    }
-
-    /*const handleImageChange = (e) => {
-        setImagen(e.target.files[0]);
-    } */
+const handleDevolver = () => {
+    navigate("/perfil");
+}
 
 
-
-
-
-    
     return (
         <div>
         <div className="container containerAdd">
             <div className="volver">
                 <button className="btnV" onClick={handleDevolver}></button>
-                <h1 className="titC">Perfil Cliente </h1>
-                <button className="btnEdit" onClick={handleEditar}>Editar Cliente</button>
+                <h1 className="titC">Editar Perfil </h1>
+
             </div>
                 <form className="container2">
                     <div className="row rowA">
@@ -115,16 +99,16 @@ const Perfil = () => {
                             <option value="opcion2">SEMESTRAL</option>
                             <option value="opcion3">ANUAL</option>
                             </select>
+                            
                         </div>
                     </div>
                     </div>
                 </form>
                 <div className="volver">
-                    <button className="btnNuevoc" onClick={handleHistorial}>Historial Pago</button>
+                    <button className="btnNuevoc" >Guardar Cambios</button>
                 </div>
         </div>
     </div>
     )
-
 }
-export default Perfil;
+    export default EditarC;

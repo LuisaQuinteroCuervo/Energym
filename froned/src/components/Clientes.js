@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Clientes.css";
+import { getClientes } from "../actions/energymActions";
 
 
 
 const Clientes = () => {
 const navigate = useNavigate();
+const [clientesList, setClientesList] = useState([]);
+const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
 const handleDevolver = () => {
     navigate("/");
@@ -15,7 +19,33 @@ const handleAgregar = () => {
     navigate("/AgregarC")
 }
 
-const [prestamosList] = useState([]);
+{/*const handlePerfil = () => {
+  navigate("/Perfil${id}")
+}*/}
+
+useEffect(() => {
+  const fetchClientes = async () => {
+    try{
+      const data = await getClientes();
+      setClientesList(data);
+      setLoading(false);
+    }catch(error){
+      setError("error al cargar los clientes");
+      setLoading(false);
+    }
+  };
+  fetchClientes();
+}, []);
+
+if (loading) {
+  return <div>Cargando...</div>; 
+}
+
+if (error) {
+  return <div>{error}</div>; 
+}
+
+
 
 
     return (
@@ -31,6 +61,7 @@ const [prestamosList] = useState([]);
               <thead>
                 <tr >
                   <th scope="col">Foto</th>
+                  <th scope="col">Cedula</th>
                   <th scope="col">Nombres</th>
                   <th scope="col">Apellidos</th>
                   <th scope="col">Correo</th>
@@ -38,23 +69,27 @@ const [prestamosList] = useState([]);
                 </tr>
               </thead>
               <tbody>
-              {prestamosList.length > 0 ? (
-                  prestamosList.map((val) => (
-                    <tr key={val.ID}>
-                      <td>{val.Foto}</td>
-                      <td>{val.Nombre}</td>
-                      <td>{val.Apellidos}</td>
-                      <td>{val.Correo}</td>
-                      <td>{val.Estado}</td>
-                    <td className="textvolver Btn_librop">  
+              {clientesList.length > 0 ? (
+                  clientesList.map((clientes) => (
+                    <tr key={clientes.id}>
+                      <td>
+                        <img 
+                        src={clientes.foto}
+                        alt="foto cliente"
+                        width="50"
+                        height="50" />
+                      </td>
+                      <td>{clientes.cedula}</td>
+                      <td>{clientes.nombre}</td>
+                      <td>{clientes.apellido}</td>
+                      <td>{clientes.correo_electronico}</td>
+                      {/*<td>{clientes.estado ? "Activo": "Inactivo"}</td>
+                    <td>  
                       <button 
-                        className="Btn_historial"
-                        type="button"
-                onClick={() => handleDevolver(val.ID)}
-                      >
-                        ✔
+                            onClick={() => handlePerfil()}>
+                              ver perfil
                       </button>
-                    </td>
+                    </td>*/}
                     </tr>
                   ))
                 ) : (
@@ -64,9 +99,6 @@ const [prestamosList] = useState([]);
                 )}
               </tbody>
             </table>
-            <div className="bGuardar">
-                    <button className="btnNuevoc">Perfil Cliente</button>
-                </div>
           </div>
         </div>
       );
