@@ -17,7 +17,7 @@ try{
 
 export const getClientesById = async (id) => {
     try{
-        const response = await axios.get(`${API_URL}/api/clientes/${id}`);
+        const response = await axios.get(`http://localhost:8000/api/clientes/${id}`);
         return response.data;
     }catch(error){
         console.error(`error al recuperar al cliente  ${id}:`, error)

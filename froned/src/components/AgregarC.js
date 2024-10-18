@@ -28,6 +28,7 @@ const [formData, setFormData] = useState({
     fecha_nacimiento: "",
     foto: "url",
     fecha_registro: obtenerFechaActual(),
+    estado: "Activo",
     
 });
 
