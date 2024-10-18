@@ -1,130 +1,154 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getClientesById } from "../actions/energymActions"; 
 import "../styles/AgregarC.css";
 import "../styles/Perfil.css";
-import { useNavigate } from "react-router-dom";
 
 const Perfil = () => {
     const navigate = useNavigate();
 
-    const handleDevolver = () => {
+    const { id } = useParams();
+    console.log(id)
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [cliente, setCliente] = useState({});
+
+    const handleDevolverC = () => {
         navigate("/clientes");
     }
 
     const handleEditar = () => {
-        navigate("/EditarC");
+        navigate(`/EditarC/${id}`);
     }
 
     const handleHistorial = () => {
-        navigate("/HistorialP")
-    }
+        navigate(`/clientes/${cliente.cedula}/historial`); // Navegar usando la cédula del cliente
+    };
 
-    /*const handleImageChange = (e) => {
-        setImagen(e.target.files[0]);
-    } */
+    useEffect(() => {
+        const fetchClientes = async () => {
 
+            try {
+                const data = await getClientesById(id); 
+                console.log(data);
+                setCliente(data);
+                setLoading(false);
+            } catch (error) {
+                setError("Error al cargar al cliente");
+                setLoading(false);
+            }
+        };
 
+        fetchClientes();
+    }, [id]);
 
-
+    if (loading) return <div>Cargando...</div>; 
 
     
+    if (error) return <div>{error}</div>; 
+    
+
+
     return (
         <div>
-        <div className="container containerAdd">
-            <div className="volver">
-                <button className="btnV" onClick={handleDevolver}></button>
-                <h1 className="titC">Perfil Cliente </h1>
-                <button className="btnEdit" onClick={handleEditar}>Editar Cliente</button>
-            </div>
+            <div className="container containerAdd">
+                <div className="volver">
+                    <button className="btnV" onClick={handleDevolverC}></button>
+                    <h1 className="titC">Perfil Cliente</h1>
+                    <button className="btnEdit" onClick={handleEditar}>Editar Cliente</button>
+                </div>
                 <form className="container2">
                     <div className="row rowA">
                         <div className="col subirF">
-                            <input
-                            type="file"
-                            className="FotoS"
-                            accept="image/*"
-                         //   onChange={handleImageChange}
-                            >
-                            </input>
-                    </div>
-
-                    <div className="row rowA">
-                        <div className="col">
-                        <p>DOCUMENTO:</p>
-                            <input className="datos2" 
-                            type="number" 
-                            placeholder="NUMERO DOCUMENTO:"
-                            ></input>
-                            <br></br>
-
-                            <p>NOMBRES:</p>
-                            <input className="datos2" 
-                            type="text" 
-                            placeholder="NOMBRES:"
-                            ></input>
-                            <br></br>
-
-                            <p>EMAIL::</p>
-                            <input className="datos2" 
-                            type="email" 
-                            placeholder="EMAIL:"
-                            ></input>
-                            <br></br>
-
-                            <p>TELEFONO:</p>
-                            <input className="datos2" 
-                            type="number" 
-                            placeholder="TELEFONO:"
-                            ></input>
-                            <br></br>
-
-                            <p>FECHA DE INICIO:</p>
-                            <input className="datos2" 
-                            type="date" 
-                            placeholder="FECHA DE INICIO:"
-                            ></input>
-                            <br></br>
+                            <img src={cliente.foto} alt="Foto del cliente" className="FotoS" /> {/* Muestra la foto del cliente */}
                         </div>
-                    </div>
-
-                    <div className="row rowA">
-                        <div className="col">
-                        <p>EDAD:</p>
-                            <input className="datos2" 
-                            type="number" 
-                            placeholder="EDAD:"
-                            ></input>
-                            <br></br>
-
-                            <p>APELLIDOS:</p>
-                            <input className="datos2" 
-                            type="text" 
-                            placeholder="APELLIDOS:"
-                            ></input>
-                            <br></br>
-
-                            <p>FECHA NACIMIENTO:</p>
-                            <input className="datos2" 
-                            type="date" 
-                            placeholder="FECHA NACIMIENTO:"
-                            ></input>
-                            <br></br>
-
-                            <p>PLAN ACTUAL:</p>
-                            <select className="datos2" required>
-                            <option value=""></option>
-                            <option value="opcion1">MENSUAL</option>
-                            <option value="opcion2">SEMESTRAL</option>
-                            <option value="opcion3">ANUAL</option>
-                            </select>
+                        <div className="row rowA">
+                            <div className="col">
+                                <p>DOCUMENTO:</p>
+                                <input className="datos2" 
+                                    type="number" 
+                                    name="cedula"
+                                    value={cliente.cedula}
+                                    readOnly 
+                                    placeholder="NUMERO DOCUMENTO:"
+                                />
+                                <br />
+                                <p>NOMBRES:</p>
+                                <input className="datos2" 
+                                    type="text" 
+                                    value={cliente.nombre}
+                                    readOnly
+                                    placeholder="NOMBRES:"
+                                />
+                                <br />
+                                <p>EMAIL:</p>
+                                <input className="datos2" 
+                                    type="email" 
+                                    value={cliente.correo_electronico}
+                                    readOnly
+                                    placeholder="EMAIL:"
+                                />
+                                <br />
+                                <p>TELEFONO:</p>
+                                <input className="datos2" 
+                                    type="number" 
+                                    value={cliente.numero_telefono}
+                                    readOnly
+                                    placeholder="TELEFONO:"
+                                />
+                                <br />
+                                <p>FECHA DE INICIO:</p>
+                                <input className="datos2" 
+                                    type="date" 
+                                    value={cliente.fecha_registro}
+                                    readOnly
+                                    placeholder="FECHA DE INICIO:"
+                                />
+                                <br />
+                            </div>
                         </div>
-                    </div>
+                        <div className="row rowA">
+                            <div className="col">
+                                <p>EDAD:</p>
+                                <input className="datos2" 
+                                    type="number" 
+                                    value={cliente.edad}
+                                    readOnly
+                                    placeholder="EDAD:"
+                                />
+                                <br />
+                                <p>APELLIDOS:</p>
+                                <input className="datos2" 
+                                    type="text" 
+                                    value={cliente.apellido}
+                                    readOnly
+                                    placeholder="APELLIDOS:"
+                                />
+                                <br />
+                                <p>FECHA NACIMIENTO:</p>
+                                <input className="datos2" 
+                                    type="date" 
+                                    value={cliente.fecha_nacimiento}
+                                    readOnly
+                                    placeholder="FECHA NACIMIENTO:"
+                                />
+                                <br />
+                                {/*<p>PLAN ACTUAL:</p> // poner como formulario de seleccion
+                                <select className="datos2" value={cliente.id_plan_pago} disabled placeholder="PLAN ACTUAL:">
+                                    <option value="1">MENSUAL</option>
+                                    <option value="2">SEMESTRAL</option>
+                                    <option value="3">ANUAL</option>
+                                </select> */}
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <div className="volver">
                     <button className="btnNuevoc" onClick={handleHistorial}>Historial Pago</button>
                 </div>
+            </div>
         </div>
-    </div>
-    )
-
+    );
 }
+
 export default Perfil;

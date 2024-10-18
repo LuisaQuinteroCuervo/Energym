@@ -26,9 +26,9 @@ function App() {
           <Route path="/Clientes" element={<Clientes/>} />
           <Route path="/Resumen" element={<Resumen/>} />
           <Route path="/AgregarC" element={<AgregarC/>} />
-          <Route path="/Perfil" element={<Perfil/>}/>
-          <Route path="/EditarC" element={<EditarC/>}/>
-          <Route path="/HistorialP" element={<HistorialP/>}/>
+          <Route path="/Perfil/:id" element={<Perfil />} />
+          <Route path="/EditarC/:id" element={<EditarC/>}/>
+          <Route path="/clientes/:cedula/historial" element={<HistorialP />} />
 
         </Routes>
       </BrowserRouter>

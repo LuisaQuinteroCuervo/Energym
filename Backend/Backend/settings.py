@@ -37,21 +37,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
+        'corsheaders',
     'administracion',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',  # Permite solicitudes desde este origen
@@ -77,6 +81,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Backend.wsgi.application'
 
+APPEND_SLASH = False
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

@@ -14,7 +14,7 @@ class Clientes(models.Model):
         ('Inactivo', 'Inactivo'),
     ]
     
-    cedula = models.IntegerField(primary_key=True)
+    cedula = models.BigIntegerField(primary_key=True)
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     correo_electronico = models.EmailField(max_length=100)
@@ -23,11 +23,12 @@ class Clientes(models.Model):
     fecha_nacimiento = models.DateField()
     foto = models.CharField(max_length=255, blank=True, null=True)
     fecha_registro = models.DateField(auto_now_add=True)
-    id_plan_pago = models.ForeignKey(PlanesPago, on_delete=models.SET_NULL, null=True)
     estado = models.CharField(max_length=8, choices=ESTADO_CHOICES, default='Inactivo')
 
+
+
     def __str__(self):
-        return f'{self.nombre} {self.apellido}'
+        return self.id_plan_pago.nombre_plan
 
 # Modelo para el historial de pagos
 class HistorialPagos(models.Model):

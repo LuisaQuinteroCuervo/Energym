@@ -1,5 +1,7 @@
 import axios from "axios";
 
+
+
 const API_URL = 'http://localhost:8000';
 
 export const getClientes = async () => {
@@ -18,7 +20,7 @@ export const getClientesById = async (id) => {
         const response = await axios.get(`${API_URL}/api/clientes/${id}`);
         return response.data;
     }catch(error){
-        console.error(`error al recuperar la pelcula ${id}:`. error)
+        console.error(`error al recuperar al cliente  ${id}:`, error)
         throw error;
     }
 };
@@ -36,9 +38,9 @@ export const createCliente = async (clientes) => {
         formData.append('fecha_nacimiento', clientes.fecha_nacimiento);
         formData.append('foto', clientes.foto);
         formData.append('fecha_registro', clientes.fecha_registro);
-        formData.append('id_plan_pago', clientes.id_plan_pago);
+        formData.append('estado', clientes.estado);
 
-        const response = await axios.post(`${API_URL}/api/clientes/`,formData);
+        const response = await axios.post(`http://localhost:8000/api/clientes/`,formData);
         return response.data;
     }catch(error){
         console.error('error al crear un cliente: ', error)
@@ -62,10 +64,20 @@ export const updateClientes = async (id,clientes) => {
         formData.append('id_plan_pago', clientes.id_plan_pago);
 
 
-        const response = await axios.put(`${API_URL}/api/clientes/${id}`,formData);
+        const response = await axios.put(`${API_URL}/api/clientes/${id}/`,formData);
         return response.data;
     }catch(error){
         console.error(`Error al actualizar al cliente ${id}: `, error)
         throw error;
     }
 }
+
+export const getHistorialPago = async (cedula) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/clientes/${cedula}/historial/`);
+      return response.data;
+    } catch (error) {
+      console.error("Error al obtener el historial de pagos:", error);
+      throw error;
+    }
+  };

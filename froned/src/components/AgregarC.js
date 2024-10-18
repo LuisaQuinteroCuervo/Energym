@@ -1,4 +1,3 @@
-
 import "../styles/AgregarC.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,20 +8,31 @@ const AgregarC = () => {
 
 const navigate = useNavigate();
 
+
+const obtenerFechaActual = () => {
+    const hoy = new Date();
+    const año = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    return `${año}-${mes}-${dia}`;
+  };
+
 const [formData, setFormData] = useState({
+
     cedula: "",
     nombre: "",
     apellido: "",
-    correo_electronico:"",
-    numero_telefono:"",
+    correo_electronico: "",
+    numero_telefono: "",
     edad: "",
-    fecha_nacimiento:"",
-    foto:null,
-    plan_actual:"",
-    fecha_registro:"",
-    id_plan_pago:"",
-    estado:"Activo"
+    fecha_nacimiento: "",
+    foto: "url",
+    fecha_registro: obtenerFechaActual(),
+    
 });
+
+
+
 
 const handleInput = (e) => {//esto es para el cambio de los ingresos de datos
     const {name, value } = e.target;
@@ -38,6 +48,8 @@ const handleImageS = (e) => {
         foto: e.target.files[0]
     })
 }
+
+
 
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,15 +129,6 @@ return(
                             ></input>
                             <br></br>
 
-                            <p>FECHA DE INICIO:</p>
-                            <input className="datos2" 
-                            type="date" 
-                            name="fecha_registro"
-                            placeholder="FECHA INICIO:"
-                            value={formData.fecha_registro}
-                            onChange={handleInput}
-                            ></input>
-                            <br></br>
                         </div>
                     </div>
 
@@ -160,18 +163,6 @@ return(
                             onChange={handleInput}
                             ></input>
                             <br></br>
-
-                            <p>PLAN ACTUAL:</p>
-                            <select className="datos2" 
-                            name="id_plan_pago"
-                            value={formData.id_plan_pago}
-                            onChange={handleInput}
-                            required>
-                            <option value=""></option>
-                            <option value="1">MENSUAL</option>
-                            <option value="2">SEMESTRAL</option>
-                            <option value="3">ANUAL</option>
-                            </select>
                         </div>
                     </div>
                 </div>
